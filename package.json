@@ -1,0 +1,39 @@
+{
+  "name": "npm-boilerplate",
+  "version": "0.0.1",
+  "description": "Use npm as a task runner",
+  "main": "default.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "uglify": "uglifyjs src/js/* -m -c -o build/default.min.js",
+    "scss": "node-sass --output-style compressed -o build/css src/scss",
+    "autoprefixer": "postcss -u autoprefixer -r build/css/*",
+    "imagemin": "imagemin src/assets build/assets -p",
+    "build:css": "npm run scss && npm run autoprefixer",
+    "build:js": "npm run uglify",
+    "build:assets": "npm run imagemin",
+    "copy-html": "cp src/*.html build/",
+    "build": "npm run build:css && npm run build:js && npm run build:assets && npm run copy-html",
+    "watch:css": "onchange 'src/scss/*.scss' -- npm run build:css",
+    "watch:js": "onchange 'src/js/*.js' -- npm run build:js",
+    "watch": "parallelshell 'npm run watch:css' 'npm run watch:js'",
+    "postinstall": "npm run watch",
+    "new-project": "npm run build && npm run watch"
+  },
+  "author": "0bie",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^6.3.6",
+    "chai": "*",
+    "imagemin-cli": "^2.1.0",
+    "mocha": "*",
+    "node-sass": "^3.4.2",
+    "onchange": "^2.4.0",
+    "parallelshell": "^2.0.0",
+    "postcss-cli": "^2.5.1",
+    "uglify-js": "^2.6.2"
+  }
+}

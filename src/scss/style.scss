@@ -1,0 +1,62 @@
+$gridConfig:(
+    columns : 12,
+    gutter  : percentage(0.02),
+    breakpoint  : ( 50  *  1em ),
+    contentPadding  : ( 1  *  1em )
+) !default;
+
+@function getGrid($setting){
+  @return map-get($gridConfig,$setting);
+}
+
+@if($gridConfig){
+
+  //structure
+  @media(min-width:getGrid(breakpoint)){
+
+    %Grid__container{
+      /**
+       *establish a new block formatting context to contain floated columns *(https://www.w3.org/TR/css3-box/#block-level0)
+       * .u-cf may also be declared on same element with .o-Grid__container
+      */
+      overflow: hidden;
+      display:flex;
+    }
+
+    %Grid__col{
+      float:left;
+      margin:0;
+      padding-left: getGrid(gutter);
+      padding-right: getGrid(gutter);
+    }
+  }
+
+  @for $i from 1 through getGrid(columns){
+     .o-Grid_#{$i}{
+       @media(min-width:getGrid(breakpoint)){
+         @extend %Grid__col;
+         width: ( ($i / getGrid(columns)) * 100% ) ;
+       }
+     }
+  }
+  /*
+   use to structure/box-off grid areas...never apply skin styles to .o-Grid or .o-Grid_${i}...alternate structures should be applied through modifiers & created in objects.Grid or the utils.scss file of that component
+  */
+  .o-Grid__container{
+    @extend %Grid__container;
+  }
+
+  .o-Grid__container{
+    /**
+     *establish a new block formatting context to contain any nested grids *(https://www.w3.org/TR/css3-box/#block-level0)
+    */
+    overflow:hidden;
+    padding:getGrid(contentPadding) ;
+  }
+
+  .o-Grid__content{
+    padding:getGrid(contentPadding) ;
+  }
+}
+
+ 
