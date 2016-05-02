@@ -1,3 +1,34 @@
+//variables test
+:root {
+  --zIndex-1: 10;
+  --zIndex-2: 20;
+  --zIndex-3: 30;
+  --zIndex-4: 40;
+  --zIndex-5: 50;
+  --zIndex-6: 60;
+  --zIndex-7: 70;
+  --zIndex-8: 80;
+  --zIndex-9: 90;
+}
+
+#app {
+    --zIndex-base: var(--zIndex-1);
+    --zIndex-overlay: var(--zIndex-4);
+    --zIndex-modal: var(--zIndex-8);
+}
+
+.component {
+    --zIndex-icon: var(--zIndex-2);
+    --zIndex-popover: var(--zIndex-4);
+    --zIndex-overlay: var(--zIndex-7);
+}
+
+.component .ovr {
+
+    z-index: var(--zIndex-overlay);
+}
+
+//scss test
 $gridConfig:(
     columns : 12,
     gutter  : percentage(0.02),
@@ -15,10 +46,6 @@ $gridConfig:(
   @media(min-width:getGrid(breakpoint)){
 
     %Grid__container{
-      /**
-       *establish a new block formatting context to contain floated columns *(https://www.w3.org/TR/css3-box/#block-level0)
-       * .u-cf may also be declared on same element with .o-Grid__container
-      */
       overflow: hidden;
       display:flex;
     }
@@ -39,17 +66,11 @@ $gridConfig:(
        }
      }
   }
-  /*
-   use to structure/box-off grid areas...never apply skin styles to .o-Grid or .o-Grid_${i}...alternate structures should be applied through modifiers & created in objects.Grid or the utils.scss file of that component
-  */
   .o-Grid__container{
     @extend %Grid__container;
   }
 
   .o-Grid__container{
-    /**
-     *establish a new block formatting context to contain any nested grids *(https://www.w3.org/TR/css3-box/#block-level0)
-    */
     overflow:hidden;
     padding:getGrid(contentPadding) ;
   }
@@ -58,5 +79,3 @@ $gridConfig:(
     padding:getGrid(contentPadding) ;
   }
 }
-
- 
